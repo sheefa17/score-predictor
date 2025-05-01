@@ -1,12 +1,29 @@
-# score-predictor
-The container application image has the following requirements;
-1.  A Dockerfile.
-2.	A working directory called /opt/flask_insurance 
-3.	Python version 3.8
-4.	Python Libraries – pandas, Flask and scikit-learn (please use a requirements.txt file)
-5.	Index.html form which should be rendered using the render_template function.
-6.	Result.html which will display the predicted charges, and which should be rendered using the render_template function also.
-7.	Model.py which will train the linear regression model.
-8.	Insurance.csv which is the dataset that is required to train the linear regression model.
-9.	Flaskapp.py which will deploy the model through a Web application and accept input from the user, pass it to the model and return the results.
+#  Score Predictor Web App
+
+A simple machine learning Flask app that predicts student exam scores based on hours studied.  
+Deployed on Google Cloud and containerized using Docker.
+
+---
+
+##  Features
+
+- Accepts study hours input via web form
+- Predicts score using a trained Linear Regression model
+- Clean Flask backend with HTML frontend
+- Fully Dockerized and runs on port 5000
+- Deployed on Google Cloud VM
+
+---
+
+##  How It Works
+
+1. User enters the number of hours studied.
+2. Flask sends the input to a trained model (`model.pkl`).
+3. Model returns a predicted score.
+4. The result is displayed on a web page.
+
+---
+
+##  Project Structure
+
 
