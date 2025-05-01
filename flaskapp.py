@@ -1,41 +1,30 @@
-import pickle
-import pandas as pd
-import numpy as np
 from flask import Flask, request, render_template
+import pickle
+import numpy as np
 
 app = Flask(__name__)
 
 # Load the trained model
-model = pickle.load(open("model.pkl", "rb"))
+model = pickle.load(open('model.pkl', 'rb'))
 
-@app.route("/")
+@app.route('/')
 def home():
-    return render_template("index.html")
+    return render_template('index.html')
 
-@app.route("/predict", methods=["POST"])
+@app.route('/predict', methods=['GET', 'POST'])
 def predict():
-    # Get form data
-    age = float(request.form["age"])
-    sex = 1 if request.form["sex"] == "male" else 0
-    bmi = float(request.form["bmi"])
-    children = int(request.form["children"])
-    smoker = 1 if request.form["smoker"] == "no" else 0
-    region = int(request.form["region"])
+    if request.method == 'GET':
+        return render_template('index.html')  # Send back to form if accessed via browser URL
 
-    # Prepare features for prediction
-    #features = np.array([[age, sex, bmi, children, smoker, region]])
-    feature_names = ["age", "sex", "bmi", "children", "smoker", "region"]
-    features = pd.DataFrame([[age, sex, bmi, children, smoker, region]], columns=feature_names)
+    try:
+        hours_input = request.form['hours']
+        print(f"User input: {hours_input}")
+        hours = float(hours_input)
+        prediction = model.predict([[hours]])
+        return render_template('results.html', prediction=round(prediction[0], 2))
+    except Exception as e:
+        print(f"Error: {e}")
+        return "Invalid input. Please enter a valid number."
 
-    # Predict charges
-    prediction = model.predict(features)
-    #  Format to float and 2 decimal places
-    formatted_prediction = f"The predicted value is ${round(float(prediction), 2)}"
-
-
-    return render_template("result.html", prediction=formatted_prediction)
-
-
-if __name__ == "__main__":
-    app.run(debug=True,host='0.0.0.0')
-
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0')
