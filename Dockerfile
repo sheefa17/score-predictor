@@ -18,4 +18,4 @@ EXPOSE 5000
 
 # Run the Flask app
 CMD ["python3.8", "flaskapp.py"]
- 49aec41 (Update Dockerfile to build model.pkl during image build)
+
